@@ -6,6 +6,8 @@ class BlogsController < ApplicationController
   end
 
   def my_blogs
+    @blog = Blog.new
+    @blogs = Blog.order(:created_at,:asc).where(author:current_user).page(params[:page]).per(10)
   end
 
   def show
@@ -15,6 +17,15 @@ class BlogsController < ApplicationController
   end
 
   def create
+    @blog = Blog.new
+    @blog.title = params[:blog][:title]
+    @blog.description = params[:blog][:description]
+    @blog.author = current_user
+    if @blog.save
+      redirect_to my_blogs_path
+    else
+      render text:"Failed To Save"
+    end
   end
 
   def update

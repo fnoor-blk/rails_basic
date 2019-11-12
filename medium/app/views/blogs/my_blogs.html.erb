@@ -1,0 +1,31 @@
+<h1>New Blog</h1>
+<%=form_for @blog,url:blogs_path do |f|%>
+	<div class="form-group">
+		<%= f.label :title%>
+		<%= f.text_field :title,class:"form-control"%>
+	</div>
+	<div class="form-group">
+		<%= f.label :description%>
+		<%= f.cktext_area :description,class:"form-control"%>
+	</div>
+	<div class="form-group">
+		<%= f.submit "Submit",class:"btn btn-outline-success"%>
+	</div>
+<%end%>
+<hr>
+<h1>My Blogs</h1>
+<%@blogs.each do |blog|%>
+<div class="card">
+	<div class="card-header">
+		<%="<h1>#{blog.title}</h1> <small> by #{blog.author.email}</small>".html_safe%>
+	</div>
+	<div class="card-body">
+		<%=blog.description&.html_safe%>
+	</div>
+	<div class="card-footer">
+		<%="#{time_ago_in_words(blog.created_at)} ago"%>
+	</div>
+</div>
+<br><br><br>
+<%end%>
+<%=paginate @blogs %>

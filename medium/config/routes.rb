@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   root 'blogs#index'
   resources :blogs,except: [:index] do
     collection do

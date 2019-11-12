@@ -39,7 +39,10 @@ class BlogsController < ApplicationController
     end
   end
 
-  def edit
+  def edit 
+    if @blog.author != current_user
+      redirect_to root_path
+    end
   end
 
   def delete

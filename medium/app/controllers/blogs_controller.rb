@@ -1,7 +1,7 @@
 class BlogsController < ApplicationController
   before_action :authenticate_user!,except:[:index]
   def index
-    @blogs = Blog.all
+    @blogs = Blog.order(:created_at).page(params[:page]).per(10)
   end
 
   def my_blogs

@@ -1,7 +1,8 @@
 class BlogsController < ApplicationController
   before_action :authenticate_user!,except:[:index]
   def index
-    @blogs = Blog.order(:created_at).page(params[:page]).per(10)
+    @blogs = Blog.order(:created_at).page(params[:page]).per(10) if user_signed_in?
+    @blogs = Blog.order(:created_at).first(10) unless user_signed_in?
   end
 
   def my_blogs

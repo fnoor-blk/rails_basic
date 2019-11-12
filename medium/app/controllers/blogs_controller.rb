@@ -1,5 +1,6 @@
 class BlogsController < ApplicationController
   before_action :authenticate_user!,except:[:index]
+  before_action :set_blog,only:[:edit,:update]
   def index
     @blogs = Blog.order(:created_at).page(params[:page]).per(10) if user_signed_in?
     @blogs = Blog.order(:created_at).first(10) unless user_signed_in?
@@ -29,6 +30,13 @@ class BlogsController < ApplicationController
   end
 
   def update
+    @blog.title = params[:blog][:title]
+    @blog.description = params[:blog][:description]
+    if @blog.save
+      redirect_to my_blogs_path
+    else
+      render text:"Failed To Edit"
+    end
   end
 
   def edit
@@ -38,5 +46,11 @@ class BlogsController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def set_blog
+    @blog = Blog.find params[:id]
   end
 end

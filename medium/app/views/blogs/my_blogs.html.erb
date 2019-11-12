@@ -7,6 +7,7 @@
 <div class="card">
 	<div class="card-header">
 		<%="<h1>#{blog.title}</h1> <small> by #{blog.author.email}</small>".html_safe%>
+		<%= link_to 'Edit',edit_blog_path(id:blog.id)%>
 	</div>
 	<div class="card-body">
 		<%=blog.description&.html_safe%>

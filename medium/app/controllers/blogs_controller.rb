@@ -1,6 +1,6 @@
 class BlogsController < ApplicationController
   before_action :authenticate_user!,except:[:index]
-  before_action :set_blog,only:[:edit,:update]
+  before_action :set_blog,only:[:edit,:update,:destroy]
   def index
     @blogs = Blog.order(:created_at).page(params[:page]).per(10) if user_signed_in?
     @blogs = Blog.order(:created_at).first(10) unless user_signed_in?
@@ -49,6 +49,8 @@ class BlogsController < ApplicationController
   end
 
   def destroy
+    @blog.destroy
+    redirect_to my_blogs_path
   end
 
   private
